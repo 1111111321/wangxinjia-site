@@ -181,19 +181,33 @@
   <script>
 const car = document.getElementById("car");
 const tipText = document.getElementById("tipText");
+const stage = document.querySelector(".stage");
 
 const startPos = 80;
 const step = 70;
-const maxPos = 450;
+const carWidth = 150;          /* .car width, from the CSS above */
 const forwardDuration = 600;
 const backSpeed = 0.8;
 
 let pos = startPos;
 let running = false;
+let maxPos = 450;
 
 function update() {
   car.style.left = pos + "px";
 }
+
+/* the road is as wide as the stage, so work out where the car must stop */
+function measure() {
+  const width = stage.clientWidth || stage.offsetWidth;
+  maxPos = Math.max(startPos, width - carWidth - 16);
+  if (pos > maxPos) {
+    pos = maxPos;
+    update();
+  }
+}
+
+window.addEventListener("resize", measure);
 
 function goForward() {
   return new Promise(resolve => {
@@ -246,6 +260,7 @@ car.addEventListener("click", async () => {
   running = false;
 });
 
+measure();
 update();
 </script>
 </body>
