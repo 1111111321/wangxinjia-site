@@ -161,7 +161,7 @@
     
     <div class="stage">
       <div class="road"></div>
-      <div class="car" id="car">
+      <div class="car" id="car" role="button" tabindex="0" aria-label="Click the car">
         <div class="car-top"></div>
         <div class="window"></div>
         <div class="car-body"></div>
@@ -261,6 +261,13 @@ car.addEventListener("click", async () => {
 });
 
 measure();
+car.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    car.click();
+  }
+});
+
 update();
 </script>
 </body>
